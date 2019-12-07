@@ -41,5 +41,15 @@ namespace MapTool.Utility
             get;
             set;
         }
+        public bool ExtendedLogging
+        {
+            get;
+            set;
+        }
+        public bool RawFiles
+        {
+            get;
+            set;
+        }
     }
 }

@@ -19,7 +19,15 @@ As of current, MapTool has been designed to run on Windows operating systems, wi
 Using the graphical user interface (MapTool_UI.exe) should be fairly straightforward. If the program was installed correctly, available conversion profiles (conversion profiles are loaded from subdirectory called 'Profiles' in the program directory) should be displayed in a list for user to choose from, with a description for each of the profiles displayed next to the list if available. Maps can be added to the list of files to process by using Browse button or drag & drop on the file list itself.
 
 Instructions for the command line tool (MapTool.exe) can be found by running the program with argument -h (f.ex `MapTool.exe -h`).
-MapTool_UI.exe can also be ran with the argument -log, which enables writing of full debug log file (which can get fairly large), and is passed to MapTool.exe.
+MapTool_UI.exe can also be run with the argument -log, which enables writing of full debug log file (which can get fairly large), and is passed to MapTool.exe. It can also be run with the argument -logx, which enables generating extensive log content of non-zero or non-default data from IsoMapPack5, OverlayPack and OverlayDataPack. This extended logging is for analysis and is large, so be advised to use it for one map at a time. When parameter -filex is used, it generates raw data as bin files for IsoMapPack5, OverlayPack and OverlayDataPack. 
+
+Examples:
+
+Command line MapTool.exe (filenames can use full path or relative path from the base directory):
+MapTool.exe -i sov01umd.map -o sov01umd_out.map -p Profiles\misc_test.ini -log -logx -filex 
+
+For UI based tool (can add the parameters to the shortcut link):
+MapTool_UI.exe -log -logx -filex
 
 Documentation on the contents of conversion profile INI files and how to write them can be found [here](https://github.com/starkku/maptool/blob/master/Conversion-Profile-Documentation.md).
 

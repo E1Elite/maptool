@@ -30,8 +30,10 @@ namespace MapTool
                 { "o|outfile=", "Output file.", v => settings.FileOutput = v},
                 { "l|list", "List theater data based on input theater config file.", v => settings.List = true},
                 { "p|profilefile=", "Conversion profile file. This also enables the conversion logic.", v => settings.FileConfig = v},
-                { "log|debug-logging", "If set, writes a log to a file in program directory.", v => settings.DebugLogging = true}
-            };
+                { "log|debug-logging", "If set, writes a log to a file in program directory.", v => settings.DebugLogging = true},
+                { "logx|extended-logging", "If set, generates extensive log.", v => settings.ExtendedLogging = true},
+                { "filex|rawfiles", "If set, generates raw data as files.", v => settings.RawFiles = true}
+           };
             try
             {
                 options.Parse(args);
@@ -94,7 +96,7 @@ namespace MapTool
             }
             else Logger.Info("Output file path OK.");
 
-            MapTool map = new MapTool(settings.FileInput, settings.FileOutput, settings.FileConfig, settings.List);
+            MapTool map = new MapTool(settings.FileInput, settings.FileOutput, settings.FileConfig, settings.List, settings.ExtendedLogging, settings.RawFiles);
             if (map.Initialized) Logger.Info("MapTool initialized.");
             else
             {

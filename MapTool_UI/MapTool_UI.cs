@@ -30,6 +30,8 @@ namespace MapTool_UI
         private ListBoxProfile SelectedProfile = null;
 
         private bool EnableWriteDebugLog = false;
+        private bool EnableExtendedLog = false;
+        private bool EnableRawFiles = false;
 
         public MapTool_UI(string[] args)
         {
@@ -65,6 +67,12 @@ namespace MapTool_UI
                 {
                     case "-log":
                         EnableWriteDebugLog = true;
+                        continue;
+                    case "-logx":
+                        EnableExtendedLog = true;
+                        continue;
+                    case "-filex":
+                        EnableRawFiles = true;
                         continue;
                     default:
                         continue;
@@ -238,6 +246,8 @@ namespace MapTool_UI
             if (cbOverwrite.Checked) outputfilename = filename;
             string extra = "";
             //if (EnableWriteDebugLog) extra += " -log";
+			if (EnableExtendedLog) extra += " -logx";
+			if (EnableRawFiles) extra += " -filex";
             string cmd = "-i=\"" + filename + "\" -o=\"" + outputfilename + "\" -p=\"" + SelectedProfile.FileName + "\"" + extra;
 
             try
