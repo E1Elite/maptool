@@ -308,6 +308,17 @@ namespace MapTool
             {
                 return false;
             }
+            HashSet<Tuple<short, short>> coordList = new HashSet<Tuple<short, short>>();
+            for (int m = 0; m < Map_Height; m++)
+            {
+                for (int n = 0; n <= Map_Width * 2 - 2; n++)
+                {
+                    int dy = (m * 2 + n % 2);
+                    int rx = ((n + dy) / 2 + 1);
+                    int ry = (dy - rx + Map_Width + 1);
+                    coordList.Add(Tuple.Create((short)rx, (short)ry));
+                }
+            }
             MemoryFile mf = new MemoryFile(isoMapPack);
             for (int i = 0; i < cells; i++)
             {
@@ -317,13 +328,14 @@ namespace MapTool
                 byte subTile = mf.ReadByte();
                 byte level = mf.ReadByte();
                 byte iceGrowth = mf.ReadByte();
-                int dx = x - y + Map_FullWidth - 1;
-                int dy = x + y - Map_FullWidth - 1;
-				if (x > 0 && y > 0 && x <= 511 && y <= 511)
+				if (x > 0 && y > 0 && x <= 511 && y <= 511 && coordList.Contains(Tuple.Create((short)x, (short)y)))
                 {
                     IsoMapPack5.Add(new MapTileContainer((short)x, (short)y, tileNum, subTile, level, iceGrowth));
+                    coordList.Remove(Tuple.Create((short)x, (short)y));
                 }
             }
+            foreach (Tuple<short, short> t in coordList)
+                IsoMapPack5.Add(new MapTileContainer(t.Item1, t.Item2));
             return true;
         }
 
@@ -829,7 +841,7 @@ namespace MapTool
                         continue;
 					}
 
-					if (x > 0 && x <= MaxXOrY && y > 0 && y <= MaxXOrY)
+					if (x > 0 && x <= MaxXOrY && y > 0 && y <= MaxXOrY && (x - y) < Map_FullWidth && (y - x) < Map_FullWidth)
 					{
 						int XYSum = x + y;
 						if (XYSum >= MinXYSum && XYSum <= MaxXYSum)
